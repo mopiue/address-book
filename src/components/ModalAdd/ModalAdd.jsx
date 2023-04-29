@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { addContact } from '../../features/contacts/contactsSlice'
 
@@ -7,9 +7,10 @@ function ModalAdd({ onClose }) {
   const [email, setEmail] = useState('')
 
   const dispatch = useDispatch()
+  const contactId = useSelector((state) => state.contacts.contacts.length) + 1
 
-  const handleContactAdd = (e) => {
-    dispatch(addContact({ name, email }))
+  const handleContactAdd = () => {
+    dispatch(addContact({ contactId, name, email }))
     setName('')
     setEmail('')
     onClose()
@@ -41,13 +42,13 @@ function ModalAdd({ onClose }) {
       <div className="p-[10px] flex justify-end">
         <button
           onClick={onClose}
-          className="border-[1px] border-slate-600 rounded-md w-1/6 h-[28px] mr-[15px]"
+          className="border-[1px] border-slate-600 rounded-md w-[70px] h-[28px] mr-[15px]"
         >
           Cancel
         </button>
         <button
           onClick={() => handleContactAdd()}
-          className="border-[1px] border-slate-600 rounded-md w-1/6 h-[28px] mr-[15px]"
+          className="border-[1px] bg-green-400 rounded-md w-[70px] h-[28px] mr-[15px]"
         >
           Ok
         </button>

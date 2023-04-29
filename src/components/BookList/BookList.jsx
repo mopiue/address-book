@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import AddButton from '../AddButton/AddButton'
 import ListItem from '../ListItem/ListItem'
 
-function BookList({ onClickFunc }) {
+function BookList({ onAddClick, onEditClick }) {
   const contacts = useSelector((state) => state.contacts.contacts)
   const searchValue = useSelector((state) => state.contacts.searchValue)
 
@@ -16,12 +16,14 @@ function BookList({ onClickFunc }) {
     <div className="flex flex-col items-center gap-2 w-full mt-[15px]">
       {filteredContacts.map((contact) => (
         <ListItem
-          key={contact.name}
+          key={contact.email}
+          id={contact.id}
           name={contact.name}
           email={contact.email}
+          onEditClick={onEditClick}
         />
       ))}
-      <AddButton onClickFunc={onClickFunc} />
+      <AddButton onAddClick={onAddClick} />
     </div>
   )
 }

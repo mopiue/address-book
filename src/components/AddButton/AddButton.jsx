@@ -1,7 +1,7 @@
-function AddButton({ onClickFunc }) {
+function AddButton({ onAddClick }) {
   return (
     <span
-      onClick={onClickFunc}
+      onClick={onAddClick}
       className="text-3xl cursor-pointer w-10 inline-block text-center"
     >
       +
