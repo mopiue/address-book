@@ -1,31 +1,58 @@
-function ModalAdd({ onClose, show, children }) {
-  if (!show) return null
+import { useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { addContact } from '../../features/contacts/contactsSlice'
+
+function ModalAdd({ onClose }) {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+
+  const dispatch = useDispatch()
+
+  const handleContactAdd = (e) => {
+    dispatch(addContact({ name, email }))
+    setName('')
+    setEmail('')
+    onClose()
+  }
 
   return (
-    <div
-      onClick={onClose}
-      className="fixed left-0 top-0 right-0 bottom-0 flex items-center justify-center"
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="w-[500px] bg-white rounded-lg border-[1px] border-slate-400"
-      >
-        <div className="p-[10px]">
-          <div className="font-bold text-lg">My Address Book / New Contact</div>
-        </div>
-        <div className="p-[10px] border-t-[1px] border-t-slate-300 border-b-[1px] border-b-slate-300">
-          {children}
-        </div>
-        <div className="p-[10px] flex justify-end">
-          <button
-            onClick={onClose}
-            className="border-[1px] border-slate-600 rounded-md w-1/6 h-[28px] mr-[30px]"
-          >
-            Close
-          </button>
-        </div>
+    <>
+      <div className="p-[10px] bg-slate-100 rounded-t-lg">
+        <div className="font-bold text-lg">My Address Book / New Contact</div>
       </div>
-    </div>
+      <div className="flex flex-col gap-[20px] p-[25px] border-t-[1px] border-t-slate-300 border-b-[1px] border-b-slate-300">
+        <input
+          type="text"
+          name="name"
+          value={name}
+          className="border-[1px] border-black outline-none pl-[10px] w-full h-[30px]"
+          placeholder="Name"
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="text"
+          name="email"
+          value={email}
+          className="border-[1px] border-black outline-none pl-[10px] w-full h-[30px]"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+      <div className="p-[10px] flex justify-end">
+        <button
+          onClick={onClose}
+          className="border-[1px] border-slate-600 rounded-md w-1/6 h-[28px] mr-[15px]"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={() => handleContactAdd()}
+          className="border-[1px] border-slate-600 rounded-md w-1/6 h-[28px] mr-[15px]"
+        >
+          Ok
+        </button>
+      </div>
+    </>
   )
 }
 
