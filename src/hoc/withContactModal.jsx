@@ -8,7 +8,7 @@ function withContactModal(WrappedComponent) {
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className="w-[500px] bg-white rounded-lg border-[1px] border-slate-400"
+          className="w-[380px] sm:w-[500px] bg-white rounded-lg border-[1px] border-slate-400"
         >
           <WrappedComponent {...props} />
         </div>
