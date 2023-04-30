@@ -13,7 +13,7 @@ function App() {
   const [modalEditShow, setModalEditShow] = useState(false)
 
   return (
-    <div className="flex flex-col items-center mx-auto w-[744px] p-5 border-2 border-t-0 rounded-b-[5px] border-gray-300">
+    <div className="flex flex-col items-center mx-auto w-[744px] p-5">
       <h1 className="font-bold text-[28px] mb-[5px]">My Address Book</h1>
       <Search />
       <BookList

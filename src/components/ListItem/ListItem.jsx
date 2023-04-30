@@ -17,7 +17,11 @@ function ListItem({ id, name, email, onEditClick }) {
   }
 
   return (
-    <div className="flex w-full border-2 p-[7px] bg-[#e5e5e5] justify-between px-5 items-center rounded-lg">
+    <div
+      className={`flex w-full border-2 p-[7px] ${
+        id % 2 === 0 ? 'bg-[#ffffff]' : 'bg-[#e5e5e5]'
+      } justify-between px-5 items-center rounded-lg`}
+    >
       <div className="flex flex-col">
         <span
           onClick={() => handleEditClick()}
@@ -28,7 +32,7 @@ function ListItem({ id, name, email, onEditClick }) {
         <span>{email}</span>
       </div>
       <div className="cursor-pointer">
-        <AiOutlineClose onClick={() => handleRemoveItem(name)} />
+        <AiOutlineClose onClick={() => handleRemoveItem(id)} />
       </div>
     </div>
   )

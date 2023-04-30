@@ -19,7 +19,7 @@ export const contactsSlice = createSlice({
     },
     removeContact: (state, action) => {
       state.contacts = state.contacts.filter(
-        (contact) => contact.name !== action.payload
+        (contact) => contact.id !== action.payload
       )
     },
     setSearch: (state, action) => {
@@ -28,9 +28,24 @@ export const contactsSlice = createSlice({
     setCurrentEditId: (state, action) => {
       state.currentEditId = action.payload
     },
+    updateContact: (state, action) => {
+      const { name, email } = action.payload
+      const contact = state.contacts.find(
+        (contact) => contact.id === state.currentEditId
+      )
+      if (contact) {
+        contact.name = name
+        contact.email = email
+      }
+    },
   },
 })
 
-export const { addContact, removeContact, setSearch, setCurrentEditId } =
-  contactsSlice.actions
+export const {
+  addContact,
+  removeContact,
+  setSearch,
+  setCurrentEditId,
+  updateContact,
+} = contactsSlice.actions
 export default contactsSlice.reducer

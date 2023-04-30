@@ -7,10 +7,14 @@ function ModalAdd({ onClose }) {
   const [email, setEmail] = useState('')
 
   const dispatch = useDispatch()
-  const contactId = useSelector((state) => state.contacts.contacts.length) + 1
+  const contacts = useSelector((state) => state.contacts.contacts)
+  let maxId = contacts.reduce((max, item) => {
+    return item.id > max ? item.id : max
+  }, 0)
 
   const handleContactAdd = () => {
-    dispatch(addContact({ contactId, name, email }))
+    maxId += 1
+    dispatch(addContact({ id: maxId, name, email }))
     setName('')
     setEmail('')
     onClose()
