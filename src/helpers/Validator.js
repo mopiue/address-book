@@ -7,7 +7,7 @@ export const validate = {
       : {
           isValid: false,
           errorMessage:
-            'Допускается кириллица и латиница, неменьше 3 и небольше 12 символов',
+            'Cyrillic and Latin characters allowed, not less than 3 and not more than 12 characters',
         }
   },
 
@@ -18,7 +18,7 @@ export const validate = {
       ? { isValid: true }
       : {
           isValid: false,
-          errorMessage: 'Укажите валидный адрес электронной почты',
+          errorMessage: 'Enter a valid email address',
         }
   },
 }

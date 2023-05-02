@@ -14,7 +14,9 @@ function App() {
 
   return (
     <div className="flex flex-col items-center mx-auto w-[380px] sm:w-[584px] lg:w-[744px] p-5">
-      <h1 className="font-bold text-[28px] mb-[5px]">My Address Book</h1>
+      <h1 className="font-bold text-[28px] mb-[5px] text-white">
+        My Address Book
+      </h1>
       <Search />
       <BookList
         onAddClick={() => setModalAddShow(true)}

@@ -1,4 +1,4 @@
-import { AiOutlineSearch } from 'react-icons/ai'
+import { BiSearch } from 'react-icons/bi'
 import { useDispatch } from 'react-redux'
 import { setSearch } from '../../features/contacts/contactsSlice'
 
@@ -10,11 +10,11 @@ const Search = () => {
   }
 
   return (
-    <div className="flex items-center">
-      <AiOutlineSearch className="absolute ml-[15px] text-[18px] text-gray-600" />
+    <div className="flex items-center relative">
+      <BiSearch className="absolute ml-[15px] text-[18px] text-[#94a3b8]" />
       <input
         type="text"
-        className="w-[340px] sm:w-[544px] lg:w-[704px] px-[35px] py-2 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        className="w-[340px] sm:w-[544px] lg:w-[704px] px-[40px] h-[40px] rounded-lg bg-[#1e293b] text-[#94a3b8] focus:outline-none hover:bg-[#334155] focus:bg-[#334155]"
         onChange={(e) => handleSearchValue(e)}
       />
     </div>

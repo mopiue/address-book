@@ -29,13 +29,13 @@ export const contactsSlice = createSlice({
       state.currentEditId = action.payload
     },
     updateContact: (state, action) => {
-      const { name, email } = action.payload
+      const { inputName, inputEmail } = action.payload
       const contact = state.contacts.find(
         (contact) => contact.id === state.currentEditId
       )
       if (contact) {
-        contact.name = name
-        contact.email = email
+        contact.name = inputName
+        contact.email = inputEmail
       }
     },
   },

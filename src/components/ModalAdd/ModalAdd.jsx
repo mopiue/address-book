@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { addContact } from '../../features/contacts/contactsSlice'
+import { validate } from '../../helpers/Validator'
 
 function ModalAdd({ onClose }) {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
+  const [inputName, setInputName] = useState('')
+  const [inputEmail, setInputEmail] = useState('')
+  const [validateName, setValidateName] = useState({})
+  const [validateEmail, setValidateEmail] = useState({})
 
   const dispatch = useDispatch()
   const contacts = useSelector((state) => state.contacts.contacts)
@@ -12,47 +15,76 @@ function ModalAdd({ onClose }) {
     return item.id > max ? item.id : max
   }, 0)
 
+  const inputStyle = `h-[40px] px-[10px] rounded-lg bg-[#1e293b] text-[#94a3b8] focus:outline-none hover:bg-[#334155] focus:bg-[#334155]`
+
   const handleContactAdd = () => {
+    setValidateName(validate.name(inputName))
+    setValidateEmail(validate.email(inputEmail))
+
     maxId += 1
-    dispatch(addContact({ id: maxId, name, email }))
-    setName('')
-    setEmail('')
-    onClose()
   }
+
+  useEffect(() => {
+    if (validateName.isValid && validateEmail.isValid) {
+      dispatch(addContact({ id: maxId, name: inputName, email: inputEmail }))
+
+      setInputName('')
+      setInputEmail('')
+
+      onClose()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [validateName, validateEmail, dispatch])
 
   return (
     <>
-      <div className="p-[10px] bg-slate-100 rounded-t-lg">
-        <div className="font-bold text-lg">My Address Book / New Contact</div>
+      <div className="p-[10px] rounded-t-lg">
+        <div className="font-bold text-lg text-white">
+          My Address Book / New Contact
+        </div>
       </div>
-      <div className="flex flex-col gap-[20px] p-[25px] border-t-[1px] border-t-slate-300 border-b-[1px] border-b-slate-300">
+      <div className="flex flex-col gap-[10px] p-[25px] border-t-[1px] border-t-[#353f4f] border-b-[1px] border-b-[#353f4f]">
         <input
           type="text"
           name="name"
-          value={name}
-          className="border-[1px] border-black outline-none pl-[10px] w-full h-[30px]"
+          value={inputName}
+          className={`${inputStyle} ${
+            validateName.isValid !== undefined && !validateName.isValid
+              ? 'border-2 border-red-400'
+              : ''
+          }`}
           placeholder="Name"
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setInputName(e.target.value)}
         />
+        <span className="text-white">
+          {!validateName.isValid && validateName.errorMessage}
+        </span>
         <input
           type="text"
           name="email"
-          value={email}
-          className="border-[1px] border-black outline-none pl-[10px] w-full h-[30px]"
+          value={inputEmail}
+          className={`${inputStyle} ${
+            validateEmail.isValid !== undefined && !validateEmail.isValid
+              ? 'border-2 border-red-400'
+              : ''
+          }`}
           placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setInputEmail(e.target.value)}
         />
+        <span className="text-white">
+          {!validateEmail.isValid && validateEmail.errorMessage}
+        </span>
       </div>
-      <div className="p-[10px] flex justify-end">
+      <div className="py-[20px] px-[10px] flex justify-end">
         <button
           onClick={onClose}
-          className="border-[1px] border-slate-600 rounded-md w-[70px] h-[28px] mr-[15px]"
+          className="hover:bg-[#26314a] border-[1px] border-slate-600 bg-[#1c2538] text-[#94a3b8] rounded-md w-[70px] h-[32px] mr-[15px]"
         >
           Cancel
         </button>
         <button
           onClick={() => handleContactAdd()}
-          className="border-[1px] bg-green-400 rounded-md w-[70px] h-[28px] mr-[15px]"
+          className="hover:bg-[#26314a] border-[1px] border-slate-600 bg-[#1c2538] text-[#94a3b8] rounded-md w-[70px] h-[32px] mr-[15px]"
         >
           Ok
         </button>

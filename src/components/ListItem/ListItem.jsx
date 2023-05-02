@@ -12,27 +12,31 @@ function ListItem({ id, name, email, onEditClick }) {
 
   const handleEditClick = () => {
     onEditClick()
-
     dispatch(setCurrentEditId(id))
   }
 
   return (
     <div
       className={`flex w-full border-2 p-[7px] ${
-        id % 2 === 0 ? 'bg-[#ffffff]' : 'bg-[#e5e5e5]'
-      } justify-between px-5 items-center rounded-lg`}
+        id % 2 === 0
+          ? 'bg-[#314361] border-[#445d87]'
+          : 'bg-[#1e293b] border-[#353f4f]'
+      } justify-between px-5 items-center rounded-lg hover:bg-opacity-70`}
     >
       <div className="flex flex-col">
         <span
           onClick={() => handleEditClick()}
-          className="inline-block w-[max-content] text-black text-base font-bold border-b-[1px] border-dashed border-black cursor-pointer"
+          className="inline-block w-[max-content] text-white text-base font-bold border-b-[1px] border-dashed border-white cursor-pointer"
         >
           {name}
         </span>
-        <span>{email}</span>
+        <span className="text-white">{email}</span>
       </div>
       <div className="cursor-pointer">
-        <AiOutlineClose onClick={() => handleRemoveItem(id)} />
+        <AiOutlineClose
+          onClick={() => handleRemoveItem(id)}
+          className="text-[#94a3b8]"
+        />
       </div>
     </div>
   )
