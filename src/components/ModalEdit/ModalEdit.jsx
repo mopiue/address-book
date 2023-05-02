@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   updateContact,
   removeContact,
+  setContacts,
 } from '../../features/contacts/contactsSlice'
 import { validate } from '../../helpers/Validator'
 
@@ -20,6 +21,7 @@ function ModalEdit({ onClose }) {
   const [inputEmail, setInputEmail] = useState(currentContact.email)
   const [validateName, setValidateName] = useState({})
   const [validateEmail, setValidateEmail] = useState({})
+  const [updatedContacts, setUpdatedContacts] = useState([])
 
   const inputStyle = `h-[40px] px-[10px] rounded-lg bg-[#1e293b] text-[#94a3b8] focus:outline-none hover:bg-[#334155] focus:bg-[#334155]`
 
@@ -30,6 +32,8 @@ function ModalEdit({ onClose }) {
 
   const handleDeleteClick = () => {
     dispatch(removeContact(currentEditId))
+    dispatch(setContacts(updatedContacts))
+
     onClose()
   }
 
@@ -45,6 +49,19 @@ function ModalEdit({ onClose }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [validateName, validateEmail, dispatch])
+
+  useEffect(() => {
+    setUpdatedContacts(
+      contacts
+        .filter((contact) => contact.name !== currentContact.name)
+        .map((contact, index) => {
+          return {
+            ...contact,
+            id: index + 1,
+          }
+        })
+    )
+  }, [contacts, currentContact.name])
 
   return (
     <>

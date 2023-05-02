@@ -38,6 +38,9 @@ export const contactsSlice = createSlice({
         contact.email = inputEmail
       }
     },
+    setContacts: (state, action) => {
+      state.contacts = action.payload
+    },
   },
 })
 
@@ -47,5 +50,6 @@ export const {
   setSearch,
   setCurrentEditId,
   updateContact,
+  setContacts,
 } = contactsSlice.actions
 export default contactsSlice.reducer

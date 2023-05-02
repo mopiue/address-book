@@ -1,13 +1,33 @@
 import { AiOutlineClose } from 'react-icons/ai'
-import { useDispatch } from 'react-redux'
-import { removeContact } from '../../features/contacts/contactsSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  removeContact,
+  setContacts,
+} from '../../features/contacts/contactsSlice'
 import { setCurrentEditId } from '../../features/contacts/contactsSlice'
+import { useEffect, useState } from 'react'
 
 function ListItem({ id, name, email, onEditClick }) {
+  const [updatedContacts, setUpdatedContacts] = useState([])
   const dispatch = useDispatch()
+  const contacts = useSelector((state) => state.contacts.contacts)
+
+  useEffect(() => {
+    setUpdatedContacts(
+      contacts
+        .filter((contact) => contact.name !== name)
+        .map((contact, index) => {
+          return {
+            ...contact,
+            id: index + 1,
+          }
+        })
+    )
+  }, [contacts, name])
 
   const handleRemoveItem = (name) => {
     dispatch(removeContact(name))
+    dispatch(setContacts(updatedContacts))
   }
 
   const handleEditClick = () => {
