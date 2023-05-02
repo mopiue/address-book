@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { addContact } from '../../features/contacts/contactsSlice'
 import { validate } from '../../helpers/Validator'
 
@@ -11,23 +11,26 @@ function ModalAdd({ onClose }) {
 
   const dispatch = useDispatch()
   const contacts = useSelector((state) => state.contacts.contacts)
-  let maxId = contacts.reduce((max, item) => {
-    return item.id > max ? item.id : max
-  }, 0)
+  const maxId = useRef(
+    contacts.reduce((max, item) => {
+      return item.id > max ? item.id : max
+    }, 0)
+  )
 
   const inputStyle = `h-[40px] px-[10px] rounded-lg bg-[#1e293b] text-[#94a3b8] focus:outline-none hover:bg-[#334155] focus:bg-[#334155]`
 
   const handleContactAdd = () => {
     setValidateName(validate.name(inputName))
     setValidateEmail(validate.email(inputEmail))
-
-    maxId += 1
   }
 
   useEffect(() => {
     if (validateName.isValid && validateEmail.isValid) {
-      dispatch(addContact({ id: maxId, name: inputName, email: inputEmail }))
+      maxId.current += 1
 
+      dispatch(
+        addContact({ id: maxId.current, name: inputName, email: inputEmail })
+      )
       setInputName('')
       setInputEmail('')
 
