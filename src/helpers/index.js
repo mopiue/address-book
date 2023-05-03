@@ -22,3 +22,14 @@ export const validate = {
         }
   },
 }
+
+export const updateContacts = (contacts, id) => {
+  return contacts
+    .filter((contact) => contact.id !== id)
+    .map((contact, index) => {
+      return {
+        ...contact,
+        id: index + 1,
+      }
+    })
+}

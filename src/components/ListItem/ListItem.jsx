@@ -6,6 +6,7 @@ import {
 } from '../../features/contacts/contactsSlice'
 import { setCurrentEditId } from '../../features/contacts/contactsSlice'
 import { useEffect, useState } from 'react'
+import { updateContacts } from '../../helpers'
 
 function ListItem({ id, name, email, onEditClick }) {
   const [updatedContacts, setUpdatedContacts] = useState([])
@@ -13,17 +14,8 @@ function ListItem({ id, name, email, onEditClick }) {
   const contacts = useSelector((state) => state.contacts.contacts)
 
   useEffect(() => {
-    setUpdatedContacts(
-      contacts
-        .filter((contact) => contact.name !== name)
-        .map((contact, index) => {
-          return {
-            ...contact,
-            id: index + 1,
-          }
-        })
-    )
-  }, [contacts, name])
+    setUpdatedContacts(updateContacts(contacts, id))
+  }, [contacts, id])
 
   const handleRemoveItem = (name) => {
     dispatch(removeContact(name))

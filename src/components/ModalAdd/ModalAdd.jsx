@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useState, useEffect, useRef } from 'react'
 import { addContact } from '../../features/contacts/contactsSlice'
-import { validate } from '../../helpers/Validator'
+import { validate } from '../../helpers/'
 
 function ModalAdd({ onClose }) {
   const [inputName, setInputName] = useState('')
@@ -29,7 +29,11 @@ function ModalAdd({ onClose }) {
       maxId.current += 1
 
       dispatch(
-        addContact({ id: maxId.current, name: inputName, email: inputEmail })
+        addContact({
+          id: maxId.current,
+          name: inputName,
+          email: inputEmail.toLowerCase(),
+        })
       )
       setInputName('')
       setInputEmail('')

@@ -5,7 +5,7 @@ import {
   removeContact,
   setContacts,
 } from '../../features/contacts/contactsSlice'
-import { validate } from '../../helpers/Validator'
+import { validate, updateContacts } from '../../helpers/'
 
 function ModalEdit({ onClose }) {
   const dispatch = useDispatch()
@@ -44,24 +44,17 @@ function ModalEdit({ onClose }) {
       (currentContact.name.trim() !== inputName.trim() ||
         currentContact.email.trim() !== inputEmail.trim())
     ) {
-      dispatch(updateContact({ inputName, inputEmail }))
+      dispatch(
+        updateContact({ inputName, inputEmail: inputEmail.toLowerCase() })
+      )
       onClose()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [validateName, validateEmail, dispatch])
 
   useEffect(() => {
-    setUpdatedContacts(
-      contacts
-        .filter((contact) => contact.name !== currentContact.name)
-        .map((contact, index) => {
-          return {
-            ...contact,
-            id: index + 1,
-          }
-        })
-    )
-  }, [contacts, currentContact.name])
+    setUpdatedContacts(updateContacts(contacts, currentContact.id))
+  }, [contacts, currentContact.id])
 
   return (
     <>
